@@ -1,6 +1,6 @@
 using System;
 
-public class Test
+public class test
 {
     public static void Main(string[] args)
     {
@@ -9,13 +9,19 @@ public class Test
         line L1, L2;    //線の端点などを格納するクラス(line)を２本
         float determinant, s, t, x, y;
         bool isPoint = false;
+        inputManager IM = new inputManager();
 
         while(true){
             Console.WriteLine("Please input the values in the order of N, M, P, Q.");
-            var conditions = Console.ReadLine().Split(' ');
-
-            if(conditions.Length == 4 && int.TryParse(conditions[0], out N) && int.TryParse(conditions[1], out M)
-                && int.TryParse(conditions[2], out P) && int.TryParse(conditions[3], out Q)){
+            int[] input = new int[4];
+            
+            if(IM.isNum(ref input) && IM.limitCheck(input[0], 3, 4) && IM.limitCheck(input[1], 2, 2)
+                && IM.limitCheck(input[2], 0, 0) && IM.limitCheck(input[3], 0, 0))
+            {
+                N = input[0];
+                M = input[1];
+                P = input[2];
+                Q = input[3];
                 break;
             }
         };
@@ -25,11 +31,12 @@ public class Test
         for(int i = 0;i < N;i++)
         {
             while(true){
-                var cordinates = Console.ReadLine().Split(' ');
-                int x_temp, y_temp;
+                int[] input = new int[2];
 
-                if(cordinates.Length == 2 && int.TryParse(cordinates[0], out x_temp) && int.TryParse(cordinates[1], out y_temp)){
-                    points[i] = new point(x_temp, y_temp);
+                if(IM.isNum(ref input) && IM.limitCheck(input[0], 0, 1000) 
+                    && IM.limitCheck(input[1], 0, 1000))
+                {
+                    points[i] = new point(input[0], input[1]);
                     break;
                 }
                 else{
@@ -41,11 +48,12 @@ public class Test
         Console.WriteLine("Please choose endpoints of L1 from 1 through " + N.ToString() + ".");
 
         while(true){
-            int p, q;
-            var order = Console.ReadLine().Split(' ');
-
-            if(order.Length == 2 && int.TryParse(order[0], out p) && int.TryParse(order[1], out q)){
-                L1 = new line(points[p - 1], points[q - 1]);
+            int[] input = new int[2];;
+            
+            if(IM.isNum(ref input) && IM.limitCheck(input[0], 1, N) 
+                    && IM.limitCheck(input[1], 1, N))
+            {
+                L1 = new line(points[input[0] - 1], points[input[1] - 1]);
                 break;
             }
             else{
@@ -54,11 +62,12 @@ public class Test
         };
         
         while(true){
-            int p, q;
-            var order = Console.ReadLine().Split(' ');
-
-            if(order.Length == 2 && int.TryParse(order[0], out p) && int.TryParse(order[1], out q)){
-                L2 = new line(points[p - 1], points[q - 1]);
+            int[] input = new int[2];;
+            
+            if(IM.isNum(ref input) && IM.limitCheck(input[0], 1, N) 
+                    && IM.limitCheck(input[1], 1, N))
+            {
+                L2 = new line(points[input[0] - 1], points[input[1] - 1]);
                 break;
             }
             else{
@@ -108,4 +117,3 @@ public class Test
         }
     }
 }
-
